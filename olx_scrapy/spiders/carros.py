@@ -13,8 +13,11 @@ class CarrosSpider(scrapy.Spider):
             '//ul[@id="main-ad-list"]/li[not(contains(@class, "list_native"))]'
         )
         for item in items:
-            self.log(item.xpath('./a/@href').extract_first())
-            
+            url = item.xpath('./a/@href').extract_first()
+            yield scrapy.Request(url=url, callback=self.parse_detail)
         
+    
+    def parse_detail(self, response):
+        self.log(response.url)
        
 
