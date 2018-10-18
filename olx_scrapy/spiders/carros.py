@@ -8,9 +8,13 @@ class CarrosSpider(scrapy.Spider):
     start_urls = ['https://rj.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios/']
 
     def parse(self, response):
+        
         items = response.xpath(
-            '//ul[@id="main-ad-list"]/li'
+            '//ul[@id="main-ad-list"]/li[not(contains(@class, "list_native"))]'
         )
         for item in items:
             self.log(item.xpath('./a/@href').extract_first())
             
+        
+       
+
